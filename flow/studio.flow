@@ -1,0 +1,95 @@
+{
+  "description": "A New Flow",
+  "states": [
+    {
+      "name": "Trigger",
+      "type": "trigger",
+      "transitions": [
+        {
+          "event": "incomingMessage"
+        },
+        {
+          "next": "Welcome",
+          "event": "incomingCall"
+        },
+        {
+          "event": "incomingRequest"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 80,
+          "y": 110
+        }
+      }
+    },
+    {
+      "name": "Redirect",
+      "type": "add-twiml-redirect",
+      "transitions": [
+        {
+          "next": "SayReturn",
+          "event": "return"
+        },
+        {
+          "event": "timeout"
+        },
+        {
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 240,
+          "y": 620
+        },
+        "method": "POST",
+        "url": "http://6883bf945a0b.ngrok.io/voice/hello-voice",
+        "timeout": "14400"
+      }
+    },
+    {
+      "name": "SayReturn",
+      "type": "say-play",
+      "transitions": [
+        {
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 240,
+          "y": 910
+        },
+        "loop": 1,
+        "say": "Welcome back to Tweelio",
+        "language": "en-US"
+      }
+    },
+    {
+      "name": "Welcome",
+      "type": "say-play",
+      "transitions": [
+        {
+          "next": "Redirect",
+          "event": "audioComplete"
+        }
+      ],
+      "properties": {
+        "voice": "alice",
+        "offset": {
+          "x": 220,
+          "y": 320
+        },
+        "loop": 1,
+        "say": "Hello, welcome to the payment portal",
+        "language": "en-US"
+      }
+    }
+  ],
+  "initial_state": "Trigger",
+  "flags": {
+    "allow_concurrent_calls": true
+  }
+}
