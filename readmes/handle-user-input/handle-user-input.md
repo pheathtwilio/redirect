@@ -1,6 +1,6 @@
-# Blank
+# Handle User Input
 
-This is a blank template Function that will return an empty JSON
+This is a function that will gather 4 digits and return to a specific Studio Flow instance
 
 ## Environment variables
 
